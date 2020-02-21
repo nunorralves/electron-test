@@ -4,17 +4,21 @@ import "./App.css";
 import SplitPane from "react-split-pane";
 import Editor from "./editor.js";
 import ReactMarkdown from "react-markdown";
+import CodeBlock from "./CodeBlock";
 
 function App() {
-  const [markdown, setMarkdown] = useState("# xpto");
+  const [markdown, setMarkdown] = useState(
+    "# xpto\n\n```javascript\nconst function = () =>{\n}\n```"
+  );
 
   const onMarkdownChange = md => {
     setMarkdown(md);
   };
 
   return (
-    <div className='App'>
-      <SplitPane split='vertical' defaultSize='50%'>
+    <SplitPane className='App' split='vertical' minSize={220}>
+      <div>Notes</div>
+      <SplitPane defaultSize='50%' minSize={100}>
         <div className='editor-pane'>
           <Editor
             className='editor'
@@ -23,12 +27,14 @@ function App() {
           />
         </div>
         <div className='view-pane'>
-          <div className='view-pane'>
-            <ReactMarkdown className='result' source={markdown} />
-          </div>
+          <ReactMarkdown
+            className='result'
+            source={markdown}
+            renderers={{ code: CodeBlock }}
+          />
         </div>
       </SplitPane>
-    </div>
+    </SplitPane>
   );
 }
 
