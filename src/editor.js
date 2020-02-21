@@ -9,6 +9,7 @@ require("codemirror/theme/monokai.css");
 
 const Editor = props => {
   console.log(props);
+  const { markdown, onChange } = props;
   var options = {
     mode: "markdown",
     theme: "monokai",
@@ -16,10 +17,15 @@ const Editor = props => {
     viewportMargin: Infinity
   };
 
+  const updateCode = e => {
+    onChange(e);
+  };
+
   return (
     <CodeMirror
-      value={props.codeText}
+      value={props.markdown}
       options={options}
+      onChange={updateCode}
       styles={{ "background-color": "red", height: "500px" }}
     />
   );
